@@ -3,25 +3,35 @@ import { Container, Row, Col, Form, Button, Accordion, Alert } from 'react-boots
 
 const Contact = () => {
   const [formStatus, setFormStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setFormStatus(null);
+    
     const formData = new FormData(e.target);
     
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
-    })
-    .then(() => {
-      setFormStatus('success');
-      e.target.reset();
-      setTimeout(() => setFormStatus(null), 5000);
-    })
-    .catch(() => {
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      });
+      
+      if (response.ok) {
+        setFormStatus('success');
+        e.target.reset();
+        setTimeout(() => setFormStatus(null), 5000);
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
       setFormStatus('error');
-      setTimeout(() => setFormStatus(null), 5000);
-    });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -73,8 +83,8 @@ const Contact = () => {
               <Form.Label>Message</Form.Label>
               <Form.Control as="textarea" name="message" rows={3} placeholder="Tell us about your adventure plans..." required />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
+            <Button variant="primary" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Submit'}
             </Button>
           </Form>
         </Col>
