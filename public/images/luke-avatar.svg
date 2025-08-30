@@ -1,0 +1,89 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="98" fill="#87CEEB" stroke="#4682B4" stroke-width="2"/>
+  
+  <!-- Mountain silhouette background -->
+  <path d="M 0 150 L 50 120 L 80 130 L 120 100 L 150 115 L 200 140 L 200 200 L 0 200 Z" fill="#2F4F2F" opacity="0.3"/>
+  
+  <!-- Neck -->
+  <rect x="85" y="140" width="30" height="30" fill="#D4A373"/>
+  
+  <!-- Head/Face -->
+  <ellipse cx="100" cy="90" rx="35" ry="40" fill="#D4A373"/>
+  
+  <!-- Ears -->
+  <ellipse cx="65" cy="90" rx="8" ry="12" fill="#D4A373"/>
+  <ellipse cx="135" cy="90" rx="8" ry="12" fill="#D4A373"/>
+  
+  <!-- Cork Hat Base -->
+  <ellipse cx="100" cy="65" rx="45" ry="8" fill="#8B4513"/>
+  <path d="M 55 65 Q 100 55, 145 65 L 145 68 Q 100 78, 55 68 Z" fill="#A0522D"/>
+  
+  <!-- Cork Hat Top -->
+  <ellipse cx="100" cy="60" rx="35" ry="6" fill="#D2691E"/>
+  
+  <!-- Corks hanging from hat -->
+  <!-- Cork 1 -->
+  <line x1="60" y1="65" x2="55" y2="85" stroke="#654321" stroke-width="1"/>
+  <ellipse cx="55" cy="88" rx="4" ry="6" fill="#DEB887"/>
+  
+  <!-- Cork 2 -->
+  <line x1="75" y1="65" x2="72" y2="85" stroke="#654321" stroke-width="1"/>
+  <ellipse cx="72" cy="88" rx="4" ry="6" fill="#DEB887"/>
+  
+  <!-- Cork 3 -->
+  <line x1="90" y1="65" x2="88" y2="82" stroke="#654321" stroke-width="1"/>
+  <ellipse cx="88" cy="85" rx="4" ry="6" fill="#DEB887"/>
+  
+  <!-- Cork 4 -->
+  <line x1="110" y1="65" x2="112" y2="82" stroke="#654321" stroke-width="1"/>
+  <ellipse cx="112" cy="85" rx="4" ry="6" fill="#DEB887"/>
+  
+  <!-- Cork 5 -->
+  <line x1="125" y1="65" x2="128" y2="85" stroke="#654321" stroke-width="1"/>
+  <ellipse cx="128" cy="88" rx="4" ry="6" fill="#DEB887"/>
+  
+  <!-- Cork 6 -->
+  <line x1="140" y1="65" x2="145" y2="85" stroke="#654321" stroke-width="1"/>
+  <ellipse cx="145" cy="88" rx="4" ry="6" fill="#DEB887"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="88" cy="85" rx="3" ry="4" fill="#4682B4"/>
+  <ellipse cx="112" cy="85" rx="3" ry="4" fill="#4682B4"/>
+  
+  <!-- Eye wrinkles (smile lines) -->
+  <path d="M 82 83 Q 80 85, 82 87" stroke="#A0522D" stroke-width="0.5" fill="none"/>
+  <path d="M 118 83 Q 120 85, 118 87" stroke="#A0522D" stroke-width="0.5" fill="none"/>
+  
+  <!-- Eyebrows -->
+  <path d="M 82 78 Q 88 76, 94 78" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <path d="M 106 78 Q 112 76, 118 78" stroke="#8B4513" stroke-width="2" fill="none"/>
+  
+  <!-- Nose -->
+  <path d="M 100 88 L 97 98 L 100 100 L 103 98 Z" fill="#C4915C"/>
+  
+  <!-- Big friendly smile -->
+  <path d="M 85 105 Q 100 115, 115 105" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <path d="M 85 105 Q 100 118, 115 105" fill="#FFF" opacity="0.8"/>
+  
+  <!-- Stubble/beard shadow -->
+  <ellipse cx="100" cy="115" rx="25" ry="15" fill="#8B4513" opacity="0.15"/>
+  
+  <!-- Shirt collar -->
+  <path d="M 70 145 L 85 140 L 85 160 L 70 165 Z" fill="#556B2F"/>
+  <path d="M 130 145 L 115 140 L 115 160 L 130 165 Z" fill="#556B2F"/>
+  <path d="M 85 140 L 100 145 L 115 140 L 115 165 L 100 160 L 85 165 Z" fill="#6B8E23"/>
+  
+  <!-- Shirt body -->
+  <path d="M 70 165 L 85 160 L 100 165 L 115 160 L 130 165 L 130 200 L 70 200 Z" fill="#6B8E23"/>
+  
+  <!-- Backpack strap (visible) -->
+  <rect x="72" y="150" width="8" height="50" fill="#8B4513" opacity="0.7"/>
+  
+  <!-- Sun reflection on face -->
+  <ellipse cx="90" cy="75" rx="8" ry="5" fill="#FFF" opacity="0.2"/>
+  
+  <!-- Signature Aussie sun-weathered skin tone -->
+  <path d="M 65 100 Q 70 102, 65 105" stroke="#CD853F" stroke-width="0.5" fill="none"/>
+  <path d="M 135 100 Q 130 102, 135 105" stroke="#CD853F" stroke-width="0.5" fill="none"/>
+</svg>
