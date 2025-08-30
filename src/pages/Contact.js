@@ -1,7 +1,29 @@
-import React from 'react';
-import { Container, Row, Col, Form, Button, Accordion } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button, Accordion, Alert } from 'react-bootstrap';
 
 const Contact = () => {
+  const [formStatus, setFormStatus] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    })
+    .then(() => {
+      setFormStatus('success');
+      e.target.reset();
+      setTimeout(() => setFormStatus(null), 5000);
+    })
+    .catch(() => {
+      setFormStatus('error');
+      setTimeout(() => setFormStatus(null), 5000);
+    });
+  };
+
   return (
     <Container className="my-5">
       <div className="text-center">
@@ -18,18 +40,38 @@ const Contact = () => {
         </Col>
         <Col md={6}>
           <h2>Send Us a Message</h2>
-          <Form>
-            <Form.Group controlId="formName">
+          {formStatus === 'success' && (
+            <Alert variant="success">
+              Thanks for your message! Luke will get back to you soon.
+            </Alert>
+          )}
+          {formStatus === 'error' && (
+            <Alert variant="danger">
+              Oops! Something went wrong. Please try again or email Luke directly.
+            </Alert>
+          )}
+          <Form 
+            name="contact" 
+            method="POST" 
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            onSubmit={handleSubmit}
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <div style={{ display: 'none' }}>
+              <input name="bot-field" />
+            </div>
+            <Form.Group controlId="formName" className="mb-3">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter your name" />
+              <Form.Control type="text" name="name" placeholder="Enter your name" required />
             </Form.Group>
-            <Form.Group controlId="formEmail">
+            <Form.Group controlId="formEmail" className="mb-3">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter your email" />
+              <Form.Control type="email" name="email" placeholder="Enter your email" required />
             </Form.Group>
-            <Form.Group controlId="formMessage">
+            <Form.Group controlId="formMessage" className="mb-3">
               <Form.Label>Message</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control as="textarea" name="message" rows={3} placeholder="Tell us about your adventure plans..." required />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
