@@ -131,7 +131,7 @@ const trailsData = {
             elevation: '1,922m',
             distance: '11km from start',
             highlights: ['360° views', 'Alpine environment', 'Summit cairn'],
-            photo: './images/Feathertop A.jpg'
+            photo: './images/feathertop b.jpg'
           },
         ],
         color: '#FF6B6B'
@@ -905,7 +905,7 @@ const Maps = () => {
             <Col lg={4}>
               <h3>Cathedral Ranges Trails</h3>
               <ListGroup>
-                {trailsData.cathedral.trails.map(trail => (
+                {location.trails.map(trail => (
                   <ListGroup.Item 
                     key={trail.id}
                     active={selectedTrail?.id === trail.id}
@@ -1203,7 +1203,7 @@ const Maps = () => {
             <Col lg={4}>
               <h3>Grampians Trails</h3>
               <ListGroup>
-                {trailsData.grampians.trails.map(trail => (
+                {location.trails.map(trail => (
                   <ListGroup.Item 
                     key={trail.id}
                     active={selectedTrail?.id === trail.id}
