@@ -57,7 +57,7 @@ const About = () => {
         <Col>
           <h2>Experience & Values</h2>
           <Row>
-            <Col md={4}>
+            <Col md={6}>
               <Card className="text-center">
                 <Card.Body>
                   <i className="fas fa-compass fa-3x mb-3"></i>
@@ -66,16 +66,7 @@ const About = () => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={4}>
-              <Card className="text-center">
-                <Card.Body>
-                  <i className="fas fa-users fa-3x mb-3"></i>
-                  <Card.Title>500+ Adventures</Card.Title>
-                  <Card.Text>Successfully led over 500 trips with fellow adventurers</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4}>
+            <Col md={6}>
               <Card className="text-center">
                 <Card.Body>
                   <i className="fas fa-leaf fa-3x mb-3"></i>
