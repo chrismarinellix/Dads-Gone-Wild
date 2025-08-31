@@ -1,5 +1,6 @@
 import React from 'react';
-import { Carousel, Container, Row, Col, Card } from 'react-bootstrap';
+import { Carousel, Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   // All images with their location info
@@ -90,6 +91,9 @@ const Home = () => {
         <div className="text-center">
           <h2>No Gear? No Worries! We've Got You Covered</h2>
           <p className="lead">Welcome to Dad's Gone Wild - where busy dads rediscover adventure in Victoria's spectacular high country. Leave the planning to us and just bring your sense of adventure!</p>
+          <Button as={Link} to="/booking" variant="primary" size="lg" className="mt-3">
+            Book Your Adventure Now
+          </Button>
         </div>
 
         <Row className="mt-5">

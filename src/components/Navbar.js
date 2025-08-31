@@ -14,6 +14,7 @@ const AppNavbar = () => {
           <Nav.Link as={Link} to="/adventures">Adventures</Nav.Link>
           <Nav.Link as={Link} to="/locations">Locations</Nav.Link>
           <Nav.Link as={Link} to="/maps">Trail Maps</Nav.Link>
+          <Nav.Link as={Link} to="/booking" className="text-warning">Book Now</Nav.Link>
           <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
           <Nav.Link as={Link} to="/terms">Terms</Nav.Link>
         </Nav>

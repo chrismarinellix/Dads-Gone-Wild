@@ -8,6 +8,7 @@ import Locations from './pages/Locations';
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
 import Maps from './pages/Maps';
+import Booking from './pages/Booking';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/adventures" element={<Adventures />} />
         <Route path="/locations" element={<Locations />} />
         <Route path="/maps" element={<Maps />} />
+        <Route path="/booking" element={<Booking />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
       </Routes>
