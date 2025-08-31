@@ -1,6 +1,7 @@
 import React from 'react';
-import { Carousel, Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Carousel, Container } from 'react-bootstrap';
+import HeroSection from '../components/HeroSection';
+import FeatureCards from '../components/FeatureCards';
 
 const Home = () => {
   // All images with their location info
@@ -69,79 +70,35 @@ const Home = () => {
 
   return (
     <div>
-      <Carousel interval={4000} fade>
-        {allSlides.map((slide, index) => (
-          <Carousel.Item key={index}>
-            <img
-              className="d-block w-100"
-              src={slide.image}
-              alt={slide.name}
-              style={carouselImageStyle}
-            />
-            <Carousel.Caption style={captionStyle}>
-              <h2>{slide.name}</h2>
-              <h4>{slide.caption}</h4>
-              <p>{slide.subtitle}</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        ))}
-      </Carousel>
+      {/* Modern Hero Section */}
+      <HeroSection />
 
+      {/* Modern Feature Cards */}
+      <FeatureCards />
+      
+      {/* Image Gallery Section */}
       <Container className="my-5">
-        <div className="text-center">
-          <h2>No Gear? No Worries! We've Got You Covered</h2>
-          <p className="lead">Welcome to Dad's Gone Wild - where busy dads rediscover adventure in Victoria's spectacular high country. Leave the planning to us and just bring your sense of adventure!</p>
-          <Button as={Link} to="/booking" variant="primary" size="lg" className="mt-3">
-            Book Your Adventure Now
-          </Button>
+        <div className="text-center mb-5">
+          <h2 className="text-4xl font-bold mb-4">Explore Our Destinations</h2>
+          <p className="text-xl text-gray-600">Three iconic Victorian alpine locations, each offering unique adventures</p>
         </div>
-
-        <Row className="mt-5">
-          <Col md={3}>
-            <Card className="text-center">
-              <Card.Body>
-                <i className="fas fa-campground fa-3x mb-3"></i>
-                <Card.Title>All Gear Provided</Card.Title>
-                <Card.Text>
-                  From tents to sleeping bags, cooking equipment to safety gear - we bring everything. You just need comfortable shoes and a daypack.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={3}>
-            <Card className="text-center">
-              <Card.Body>
-                <i className="fas fa-users fa-3x mb-3"></i>
-                <Card.Title>Small Groups Only</Card.Title>
-                <Card.Text>
-                  Maximum 6 adventurers per trip ensures an intimate, personalized experience where you'll make real connections.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={3}>
-            <Card className="text-center">
-              <Card.Body>
-                <i className="fas fa-mountain fa-3x mb-3"></i>
-                <Card.Title>Expert Local Guide</Card.Title>
-                <Card.Text>
-                  Luke Mansfield, your experienced guide, knows every trail, viewpoint, and secret spot in the Victorian Alps.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={3}>
-            <Card className="text-center">
-              <Card.Body>
-                <i className="fas fa-utensils fa-3x mb-3"></i>
-                <Card.Title>Meals Included</Card.Title>
-                <Card.Text>
-                  Hearty bush tucker and campfire meals. Special dietary requirements? No problem - just let us know.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        <Carousel interval={4000} fade>
+          {allSlides.map((slide, index) => (
+            <Carousel.Item key={index}>
+              <img
+                className="d-block w-100 rounded-lg"
+                src={slide.image}
+                alt={slide.name}
+                style={carouselImageStyle}
+              />
+              <Carousel.Caption style={captionStyle}>
+                <h2>{slide.name}</h2>
+                <h4>{slide.caption}</h4>
+                <p>{slide.subtitle}</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          ))}
+        </Carousel>
       </Container>
     </div>
   );
