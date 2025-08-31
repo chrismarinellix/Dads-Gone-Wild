@@ -5,7 +5,7 @@ const About = () => {
   const lukePhotos = [
     { src: './images/luke 1.jpg', alt: 'Luke on the trail' },
     { src: './images/luke 2.JPG', alt: 'Luke at summit' },
-    { src: './images/luke 3.JPG', alt: 'Luke hiking' },
+    { src: './images/luke 5.jpg', alt: 'Luke hiking' },
     { src: './images/luke 4.JPG', alt: 'Luke in the mountains' }
   ];
 
