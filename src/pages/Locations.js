@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Tabs, Tab, Table } from 'react-bootstrap';
+import { Container, Tabs, Tab, Table, Card, Badge, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import LocationTab from '../components/LocationTab';
 
 const locations = [
@@ -18,6 +19,29 @@ const locations = [
       'Snow gullies that resemble feathers give the mountain its name',
       'Federation Hut provides a cozy base camp with stunning views',
       'Wildflower meadows in summer, snow adventures in winter'
+    ],
+    popularWalks: [
+      {
+        name: 'Razorback Trail',
+        difficulty: 'Hard',
+        distance: '22km',
+        duration: '7-8 hours',
+        description: 'The most spectacular alpine ridge walk in Victoria. Start at Diamantina Hut near Mt Hotham and traverse the narrow ridgeline to the summit.'
+      },
+      {
+        name: 'Bungalow Spur Track',
+        difficulty: 'Hard',
+        distance: '11km',
+        duration: '6 hours',
+        description: 'A challenging climb from Harrietville through forest to the alpine zone. Steep but rewarding with incredible summit views.'
+      },
+      {
+        name: 'Bon Accord Spur',
+        difficulty: 'Moderate-Hard',
+        distance: '14km',
+        duration: '7 hours',
+        description: 'Alternative route from Harrietville that joins the Razorback. Less steep than Bungalow Spur but longer.'
+      }
     ]
   },
   {
@@ -37,6 +61,29 @@ const locations = [
       'Native orchids bloom in spring',
       'Riverside camping at Cooks Mill',
       'Rock scrambling and exposed ridge walking'
+    ],
+    popularWalks: [
+      {
+        name: 'Southern Circuit',
+        difficulty: 'Hard',
+        distance: '10.5km',
+        duration: '5 hours',
+        description: 'Challenging circuit via Wells Cave and Sugarloaf Peak. Involves rock scrambling and exposed ridge walking with stunning views.'
+      },
+      {
+        name: 'Northern Circuit',
+        difficulty: 'Hard',
+        distance: '13.5km',
+        duration: '6 hours',
+        description: 'Full northern loop including Cathedral Peak (840m). The complete ridge experience with all major peaks.'
+      },
+      {
+        name: 'Friends Nature Trail',
+        difficulty: 'Easy',
+        distance: '2km',
+        duration: '45 minutes',
+        description: 'Perfect family walk through tall Manna Gum forest past historic Cooks Mill. Gentle and scenic.'
+      }
     ]
   },
   {
@@ -58,6 +105,29 @@ const locations = [
       'Spring wildflower displays are legendary',
       'Aboriginal rock art sites (viewing where permitted)',
       'Diverse wildlife including kangaroos, emus, and echidnas'
+    ],
+    popularWalks: [
+      {
+        name: 'The Pinnacle',
+        difficulty: 'Moderate',
+        distance: '4.2km',
+        duration: '2 hours',
+        description: 'Iconic lookout with 360° views over Halls Gap. Rock formations and stunning vistas make this the most popular walk.'
+      },
+      {
+        name: 'MacKenzie Falls',
+        difficulty: 'Easy-Moderate',
+        distance: '2km',
+        duration: '1 hour',
+        description: 'Victoria\'s largest waterfall, flowing year-round. Choose between the lookout (easy) or descend to the base (moderate).'
+      },
+      {
+        name: 'The Balconies',
+        difficulty: 'Easy',
+        distance: '2km',
+        duration: '45 minutes',
+        description: 'Famous rock formations jutting out over Victoria Valley. Easy walk perfect for sunrise or sunset photography.'
+      }
     ]
   }
 ];

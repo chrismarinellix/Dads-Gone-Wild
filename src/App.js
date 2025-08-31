@@ -6,6 +6,8 @@ import About from './pages/About';
 import Adventures from './pages/Adventures';
 import Locations from './pages/Locations';
 import Contact from './pages/Contact';
+import Terms from './pages/Terms';
+import Maps from './pages/Maps';
 
 function App() {
   return (
@@ -16,7 +18,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/adventures" element={<Adventures />} />
         <Route path="/locations" element={<Locations />} />
+        <Route path="/maps" element={<Maps />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
     </Router>
   );

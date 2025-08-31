@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Image, Carousel } from 'react-bootstrap';
+import { Row, Col, Image, Carousel, Card, Badge } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const LocationTab = ({ location }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -82,6 +83,51 @@ const LocationTab = ({ location }) => {
           </ul>
         </Col>
       </Row>
+      
+      {location.popularWalks && (
+        <Row className="mt-5">
+          <Col>
+            <h3>Popular Walks in {location.name}</h3>
+            <Row className="mt-3">
+              {location.popularWalks.map((walk, index) => (
+                <Col md={4} key={index} className="mb-3">
+                  <Card h-100>
+                    <Card.Body>
+                      <Card.Title>{walk.name}</Card.Title>
+                      <div className="mb-2">
+                        <Badge 
+                          bg={
+                            walk.difficulty === 'Easy' ? 'success' :
+                            walk.difficulty === 'Easy-Moderate' ? 'info' :
+                            walk.difficulty === 'Moderate' ? 'warning' :
+                            walk.difficulty === 'Moderate-Hard' ? 'warning' :
+                            'danger'
+                          }
+                          className="me-2"
+                        >
+                          {walk.difficulty}
+                        </Badge>
+                      </div>
+                      <Card.Text>
+                        <small className="text-muted">
+                          <strong>Distance:</strong> {walk.distance}<br />
+                          <strong>Duration:</strong> {walk.duration}
+                        </small>
+                      </Card.Text>
+                      <Card.Text>
+                        {walk.description}
+                      </Card.Text>
+                      <Link to="/maps" className="btn btn-sm btn-outline-primary">
+                        View on Map →
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };

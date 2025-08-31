@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Accordion, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
   const [formStatus, setFormStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [groupSize, setGroupSize] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +42,13 @@ const Contact = () => {
       <div className="text-center">
         <h1>Let's Start Your Adventure</h1>
         <p>Got questions? Ready to book? Just want to chat about the mountains? We'd love to hear from you!</p>
+        <Alert variant="warning" className="mt-3">
+          <Alert.Heading>🏔️ 2025 & 2026 Fully Booked!</Alert.Heading>
+          <p className="mb-0">
+            Due to overwhelming demand, all adventures for 2025 and 2026 are now fully booked. 
+            Join our waiting list below to be notified of cancellations or when 2027 bookings open.
+          </p>
+        </Alert>
       </div>
 
       <Row className="my-5">
@@ -71,20 +81,121 @@ const Contact = () => {
             <div style={{ display: 'none' }}>
               <input name="bot-field" />
             </div>
-            <Form.Group controlId="formName" className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" name="name" placeholder="Enter your name" required />
-            </Form.Group>
-            <Form.Group controlId="formEmail" className="mb-3">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" name="email" placeholder="Enter your email" required />
-            </Form.Group>
+            
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="formName" className="mb-3">
+                  <Form.Label>Name *</Form.Label>
+                  <Form.Control type="text" name="name" placeholder="Enter your name" required />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="formEmail" className="mb-3">
+                  <Form.Label>Email address *</Form.Label>
+                  <Form.Control type="email" name="email" placeholder="Enter your email" required />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="formPhone" className="mb-3">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control type="tel" name="phone" placeholder="Your contact number" />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="formGroupSize" className="mb-3">
+                  <Form.Label>Group Size *</Form.Label>
+                  <Form.Select 
+                    name="groupSize" 
+                    value={groupSize}
+                    onChange={(e) => setGroupSize(e.target.value)}
+                    required
+                  >
+                    <option value="">Select group size...</option>
+                    <option value="1">1 person (will join existing group)</option>
+                    <option value="2">2 people (will join existing group)</option>
+                    <option value="3">3 people (will join existing group)</option>
+                    <option value="4">4 people (minimum for private group)</option>
+                    <option value="5">5 people</option>
+                    <option value="6">6 people (maximum)</option>
+                  </Form.Select>
+                  {groupSize && parseInt(groupSize) < 4 && (
+                    <Form.Text className="text-warning">
+                      Note: Minimum 4 people required for a private adventure. We'll add you to an existing group or waiting list.
+                    </Form.Text>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="formLocation" className="mb-3">
+                  <Form.Label>Preferred Location</Form.Label>
+                  <Form.Select name="location">
+                    <option value="">Any location</option>
+                    <option value="feathertop">Mount Feathertop</option>
+                    <option value="cathedral">Cathedral Ranges</option>
+                    <option value="grampians">The Grampians</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="formDate" className="mb-3">
+                  <Form.Label>Preferred Dates (2027 onwards)</Form.Label>
+                  <Form.Control type="text" name="dates" placeholder="e.g., March 2027" />
+                  <Form.Text className="text-muted">
+                    2025 & 2026 fully booked - taking 2027 expressions of interest
+                  </Form.Text>
+                </Form.Group>
+              </Col>
+            </Row>
+
             <Form.Group controlId="formMessage" className="mb-3">
               <Form.Label>Message</Form.Label>
-              <Form.Control as="textarea" name="message" rows={3} placeholder="Tell us about your adventure plans..." required />
+              <Form.Control 
+                as="textarea" 
+                name="message" 
+                rows={4} 
+                placeholder="Tell us about your group, fitness levels, any special requirements..." 
+                required 
+              />
             </Form.Group>
-            <Button variant="primary" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Submit'}
+
+            <Form.Group className="mb-3">
+              <Form.Check 
+                type="checkbox"
+                id="terms-checkbox"
+                name="termsAccepted"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                required
+                label={
+                  <>
+                    I have read and accept the{' '}
+                    <Link to="/terms" target="_blank">Terms & Conditions</Link> *
+                  </>
+                }
+              />
+            </Form.Group>
+
+            <Alert variant="info" className="mb-3">
+              <small>
+                <strong>Important:</strong> All adventures require a minimum of 4 participants. 
+                Trips may be cancelled if minimum numbers aren't met. Full details in our{' '}
+                <Link to="/terms">Terms & Conditions</Link>.
+              </small>
+            </Alert>
+
+            <Button 
+              variant="primary" 
+              type="submit" 
+              disabled={isSubmitting || !termsAccepted}
+              size="lg"
+            >
+              {isSubmitting ? 'Sending...' : 'Submit Enquiry'}
             </Button>
           </Form>
         </Col>

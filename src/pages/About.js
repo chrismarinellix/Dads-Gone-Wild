@@ -21,7 +21,7 @@ const About = () => {
         <Col lg={12} className="text-center">
           <h1>G'day! I'm Luke Mansfield</h1>
           <p className="lead">Your guide to Victoria's high country adventures</p>
-          <p>Born and raised in the foothills of the Victorian Alps, I've been exploring these mountains since I could walk. Now, after 20+ years of guiding experience, I'm passionate about sharing the transformative power of the Australian bush with fellow dads who need a break from the daily grind.</p>
+          <p>After 20+ years of exploring these mountains, I'm passionate about sharing the transformative power of the Australian bush with fellow dads who need a break from the daily grind.</p>
         </Col>
       </Row>
       
@@ -55,18 +55,9 @@ const About = () => {
 
       <Row className="my-5">
         <Col>
-          <h2>Qualifications & Experience</h2>
+          <h2>Experience & Values</h2>
           <Row>
-            <Col md={3}>
-              <Card className="text-center">
-                <Card.Body>
-                  <i className="fas fa-graduation-cap fa-3x mb-3"></i>
-                  <Card.Title>Certified Mountain Guide</Card.Title>
-                  <Card.Text>Wilderness First Aid certified, Australian Mountain Safety Council accredited</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={3}>
+            <Col md={4}>
               <Card className="text-center">
                 <Card.Body>
                   <i className="fas fa-compass fa-3x mb-3"></i>
@@ -75,21 +66,21 @@ const About = () => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={3}>
+            <Col md={4}>
               <Card className="text-center">
                 <Card.Body>
                   <i className="fas fa-users fa-3x mb-3"></i>
-                  <Card.Title>500+ Guided Adventures</Card.Title>
-                  <Card.Text>Successfully led over 500 trips with zero serious incidents</Card.Text>
+                  <Card.Title>500+ Adventures</Card.Title>
+                  <Card.Text>Successfully led over 500 trips with fellow adventurers</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={3}>
+            <Col md={4}>
               <Card className="text-center">
                 <Card.Body>
                   <i className="fas fa-leaf fa-3x mb-3"></i>
                   <Card.Title>Environmental Advocate</Card.Title>
-                  <Card.Text>Leave No Trace certified, passionate about conservation</Card.Text>
+                  <Card.Text>Passionate about conservation and Leave No Trace principles</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
