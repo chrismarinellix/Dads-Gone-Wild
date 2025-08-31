@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Carousel, Container, Row, Col, Card } from 'react-bootstrap';
 
 const Home = () => {
   // All images with their location info

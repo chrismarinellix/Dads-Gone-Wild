@@ -1,6 +1,5 @@
 import React from 'react';
-import { Container, Tabs, Tab, Table, Card, Badge, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Tabs, Tab, Table } from 'react-bootstrap';
 import LocationTab from '../components/LocationTab';
 
 const locations = [
