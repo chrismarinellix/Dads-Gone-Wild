@@ -29,7 +29,7 @@ const HeroSection = () => {
           {/* Badge */}
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
             <span className="text-green-400 mr-2">●</span>
-            <span className="text-white text-sm font-medium">2025 & 2026 Fully Booked - Join Waitlist for 2027</span>
+            <span className="text-white text-sm font-medium">2025 & 2026 Fully Booked • Join Waitlist for 2027</span>
           </div>
 
           {/* Main Heading */}
