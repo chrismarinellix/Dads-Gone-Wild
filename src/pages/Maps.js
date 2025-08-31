@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Badge, Tabs, Tab, ListGroup, ProgressBar, Alert } from 'react-bootstrap';
+import { XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, Tooltip, CircleMarker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -58,6 +59,17 @@ const trailsData = {
         duration: '7-8 hours',
         elevation: '600m gain',
         description: 'The most popular route via the spectacular alpine ridge',
+        elevationProfile: [
+          { km: 0, elevation: 1700, label: 'Diamantina Hut' },
+          { km: 2, elevation: 1750, label: 'Bon Accord' },
+          { km: 5, elevation: 1780, label: 'Big Dipper' },
+          { km: 8, elevation: 1820 },
+          { km: 11, elevation: 1850, label: 'Twin Knobs' },
+          { km: 14, elevation: 1880 },
+          { km: 17, elevation: 1900, label: 'Federation Hut' },
+          { km: 19, elevation: 1920 },
+          { km: 22, elevation: 1922, label: 'Summit' }
+        ],
         coordinates: [
           [-36.8750, 147.2750], // Diamantina Hut start
           [-36.8850, 147.2600], // Bon Accord Junction
@@ -132,6 +144,16 @@ const trailsData = {
         duration: '6 hours',
         elevation: '1,400m gain',
         description: 'Steep climb from Harrietville through forest to alpine zone',
+        elevationProfile: [
+          { km: 0, elevation: 480, label: 'Harrietville' },
+          { km: 2, elevation: 780 },
+          { km: 3.5, elevation: 1080 },
+          { km: 5, elevation: 1380, label: 'Old Bungalow' },
+          { km: 6.5, elevation: 1580 },
+          { km: 8, elevation: 1780 },
+          { km: 9.5, elevation: 1880 },
+          { km: 11, elevation: 1922, label: 'Summit' }
+        ],
         coordinates: [
           [-37.0500, 147.0833], // Harrietville start
           [-37.0200, 147.1000], // Tobias Gap
@@ -154,6 +176,16 @@ const trailsData = {
         duration: '7 hours',
         elevation: '1,200m gain',
         description: 'Alternative route from Harrietville joining the Razorback',
+        elevationProfile: [
+          { km: 0, elevation: 480, label: 'Harrietville' },
+          { km: 2, elevation: 680 },
+          { km: 4, elevation: 980 },
+          { km: 6, elevation: 1280 },
+          { km: 8, elevation: 1580 },
+          { km: 10, elevation: 1750, label: 'Join Razorback' },
+          { km: 12, elevation: 1850 },
+          { km: 14, elevation: 1922, label: 'Summit' }
+        ],
         coordinates: [
           [-37.0500, 147.0833], // Harrietville
           [-37.0100, 147.1500], // Bon Accord Creek
@@ -172,6 +204,7 @@ const trailsData = {
   cathedral: {
     name: 'Cathedral Ranges',
     center: [-37.4090, 145.7120],
+    zoom: 13,
     trails: [
       {
         id: 'southern',
@@ -181,6 +214,16 @@ const trailsData = {
         duration: '5 hours',
         elevation: '500m gain',
         description: 'Challenging circuit via Wells Cave and Sugarloaf Peak',
+        elevationProfile: [
+          { km: 0, elevation: 300, label: 'Cooks Mill' },
+          { km: 1.5, elevation: 420 },
+          { km: 2.5, elevation: 520, label: 'Wells Cave' },
+          { km: 4, elevation: 620 },
+          { km: 5.5, elevation: 740, label: 'Sugarloaf Peak' },
+          { km: 7, elevation: 650 },
+          { km: 8.5, elevation: 550 },
+          { km: 10.5, elevation: 300, label: 'Return' }
+        ],
         coordinates: [
           [-37.4220, 145.7030], // Cooks Mill
           [-37.4180, 145.7080], // Wells Cave
@@ -190,9 +233,35 @@ const trailsData = {
           [-37.4220, 145.7030], // Return
         ],
         waypoints: [
-          { position: [-37.4220, 145.7030], name: 'Cooks Mill', description: 'Historic sawmill site' },
-          { position: [-37.4180, 145.7080], name: 'Wells Cave', description: 'Rock scrambling required' },
-          { position: [-37.4140, 145.7120], name: 'Sugarloaf Peak', description: '740m - Spectacular views' },
+          { 
+            position: [-37.4220, 145.7030], 
+            name: 'Cooks Mill',
+            type: 'parking',
+            description: 'Historic sawmill site and main trailhead',
+            elevation: '300m',
+            facilities: ['Parking', 'Toilets', 'Picnic area'],
+            photo: './images/cathederal A.jpeg'
+          },
+          { 
+            position: [-37.4180, 145.7080], 
+            name: 'Wells Cave',
+            type: 'cave',
+            description: 'Natural rock shelter - scrambling required',
+            elevation: '520m',
+            distance: '2.5km from start',
+            highlights: ['Rock formations', 'Aboriginal heritage site'],
+            photo: './images/cathederal b.jpg'
+          },
+          { 
+            position: [-37.4140, 145.7120], 
+            name: 'Sugarloaf Peak',
+            type: 'summit',
+            description: '740m - Spectacular 360° views',
+            elevation: '740m',
+            distance: '4km from start',
+            highlights: ['Best sunrise spot', 'Views to Melbourne'],
+            photo: './images/cathederal c.jpg'
+          },
         ],
         color: '#FF6B6B'
       },
@@ -204,6 +273,16 @@ const trailsData = {
         duration: '6 hours',
         elevation: '600m gain',
         description: 'Full northern loop including Cathedral Peak',
+        elevationProfile: [
+          { km: 0, elevation: 350, label: 'Neds Gully' },
+          { km: 2, elevation: 550 },
+          { km: 3, elevation: 700, label: 'Little Cathedral' },
+          { km: 5, elevation: 840, label: 'Cathedral Peak' },
+          { km: 7, elevation: 750, label: 'The Farmyard' },
+          { km: 9, elevation: 650 },
+          { km: 11, elevation: 500 },
+          { km: 13.5, elevation: 350, label: 'Return' }
+        ],
         coordinates: [
           [-37.4050, 145.7150], // Neds Gully
           [-37.3990, 145.7180], // Little Cathedral
@@ -213,9 +292,36 @@ const trailsData = {
           [-37.4050, 145.7150], // Return
         ],
         waypoints: [
-          { position: [-37.4050, 145.7150], name: 'Neds Gully', description: 'Northern trailhead' },
-          { position: [-37.3950, 145.7210], name: 'Cathedral Peak', description: '840m - Highest point' },
-          { position: [-37.3980, 145.7170], name: 'The Farmyard', description: 'Rock formations' },
+          { 
+            position: [-37.4050, 145.7150], 
+            name: 'Neds Gully',
+            type: 'start',
+            description: 'Northern trailhead with camping',
+            elevation: '350m',
+            facilities: ['Camping', 'Water', 'Toilets'],
+            photo: './images/cathederal A.jpeg'
+          },
+          { 
+            position: [-37.3950, 145.7210], 
+            name: 'Cathedral Peak',
+            type: 'summit',
+            description: '840m - Highest point in the range',
+            elevation: '840m',
+            distance: '5km from start',
+            highlights: ['360° views', 'Rock scrambling required'],
+            photo: './images/cathederal b.jpg',
+            warning: 'Technical climbing - experienced hikers only'
+          },
+          { 
+            position: [-37.3980, 145.7170], 
+            name: 'The Farmyard',
+            type: 'lookout',
+            description: 'Unique rock formations resembling farm animals',
+            elevation: '750m',
+            distance: '7km from start',
+            highlights: ['Rock formations', 'Photography spot'],
+            photo: './images/cathederal c.jpg'
+          },
         ],
         color: '#4ECDC4'
       },
@@ -227,6 +333,13 @@ const trailsData = {
         duration: '45 minutes',
         elevation: '50m gain',
         description: 'Family-friendly loop through forest',
+        elevationProfile: [
+          { km: 0, elevation: 300, label: 'Start' },
+          { km: 0.5, elevation: 320 },
+          { km: 1, elevation: 350, label: 'Lookout' },
+          { km: 1.5, elevation: 330 },
+          { km: 2, elevation: 300, label: 'Return' }
+        ],
         coordinates: [
           [-37.4220, 145.7030], // Cooks Mill
           [-37.4200, 145.7050], // Creek crossing
@@ -235,8 +348,23 @@ const trailsData = {
           [-37.4220, 145.7030], // Cooks Mill
         ],
         waypoints: [
-          { position: [-37.4220, 145.7030], name: 'Cooks Mill', description: 'Easy walking track' },
-          { position: [-37.4180, 145.7070], name: 'Forest Lookout', description: 'Valley views' },
+          { 
+            position: [-37.4220, 145.7030], 
+            name: 'Cooks Mill',
+            type: 'start',
+            description: 'Easy walking track through forest',
+            elevation: '300m',
+            facilities: ['Parking', 'Picnic tables', 'BBQ']
+          },
+          { 
+            position: [-37.4180, 145.7070], 
+            name: 'Forest Lookout',
+            type: 'lookout',
+            description: 'Valley views through the trees',
+            elevation: '350m',
+            distance: '1km from start',
+            photo: './images/cathederal c.jpg'
+          },
         ],
         color: '#95E77E'
       }
@@ -245,6 +373,7 @@ const trailsData = {
   grampians: {
     name: 'The Grampians',
     center: [-37.1760, 142.5200],
+    zoom: 12,
     trails: [
       {
         id: 'pinnacle',
@@ -254,6 +383,16 @@ const trailsData = {
         duration: '2 hours',
         elevation: '260m gain',
         description: 'Iconic lookout with 360° views',
+        elevationProfile: [
+          { km: 0, elevation: 320, label: 'Carpark' },
+          { km: 0.8, elevation: 380, label: 'Silent Street' },
+          { km: 1.5, elevation: 420, label: 'Cool Chamber' },
+          { km: 1.8, elevation: 480, label: 'Bridal Veil' },
+          { km: 2.1, elevation: 580, label: 'The Pinnacle' },
+          { km: 2.5, elevation: 520 },
+          { km: 3.2, elevation: 420 },
+          { km: 4.2, elevation: 320, label: 'Return' }
+        ],
         coordinates: [
           [-37.1680, 142.5270], // Wonderland Carpark
           [-37.1660, 142.5280], // Silent Street
@@ -318,15 +457,52 @@ const trailsData = {
         duration: '1 hour',
         elevation: '150m descent',
         description: 'Victoria\'s largest waterfall',
+        elevationProfile: [
+          { km: 0, elevation: 450, label: 'Carpark' },
+          { km: 0.3, elevation: 440, label: 'Lookout' },
+          { km: 0.5, elevation: 400 },
+          { km: 0.7, elevation: 350 },
+          { km: 1, elevation: 300, label: 'Falls Base' },
+          { km: 1.3, elevation: 350 },
+          { km: 1.5, elevation: 400 },
+          { km: 1.8, elevation: 440 },
+          { km: 2, elevation: 450, label: 'Return' }
+        ],
         coordinates: [
           [-37.2280, 142.4460], // Carpark
           [-37.2270, 142.4470], // Lookout
           [-37.2260, 142.4480], // Base of falls
         ],
         waypoints: [
-          { position: [-37.2280, 142.4460], name: 'MacKenzie Falls Carpark', description: 'Two trail options' },
-          { position: [-37.2270, 142.4470], name: 'Falls Lookout', description: 'Wheelchair accessible' },
-          { position: [-37.2260, 142.4480], name: 'Falls Base', description: 'Steep stairs down' },
+          { 
+            position: [-37.2280, 142.4460], 
+            name: 'MacKenzie Falls Carpark',
+            type: 'parking',
+            description: 'Two trail options - lookout or base',
+            elevation: '450m',
+            facilities: ['Parking', 'Toilets', 'Picnic area'],
+            photo: './images/grampians d.jpg'
+          },
+          { 
+            position: [-37.2270, 142.4470], 
+            name: 'Falls Lookout',
+            type: 'lookout',
+            description: 'Wheelchair accessible viewing platform',
+            elevation: '440m',
+            distance: '300m from carpark',
+            highlights: ['Accessible path', 'Best photography angle']
+          },
+          { 
+            position: [-37.2260, 142.4480], 
+            name: 'Falls Base',
+            type: 'waterfall',
+            description: 'Victoria\'s largest waterfall - 35m drop',
+            elevation: '300m',
+            distance: '1km from carpark',
+            highlights: ['Swimming hole (summer)', 'Rainbow in spray'],
+            photo: './images/grampians A.jpg',
+            warning: '260 steep steps - slippery when wet'
+          },
         ],
         color: '#4ECDC4'
       },
@@ -338,14 +514,47 @@ const trailsData = {
         duration: '45 minutes',
         elevation: '50m gain',
         description: 'Famous rock formations over Victoria Valley',
+        elevationProfile: [
+          { km: 0, elevation: 520, label: 'Reed Lookout' },
+          { km: 0.5, elevation: 530 },
+          { km: 1, elevation: 540, label: 'The Balconies' },
+          { km: 1.5, elevation: 530 },
+          { km: 2, elevation: 520, label: 'Return' }
+        ],
         coordinates: [
           [-37.2150, 142.5020], // Reed Lookout Carpark
           [-37.2140, 142.5030], // Track junction
           [-37.2130, 142.5040], // The Balconies
         ],
         waypoints: [
-          { position: [-37.2150, 142.5020], name: 'Reed Lookout', description: 'Easy walk starts here' },
-          { position: [-37.2130, 142.5040], name: 'The Balconies', description: 'Iconic rock formations' },
+          { 
+            position: [-37.2150, 142.5020], 
+            name: 'Reed Lookout',
+            type: 'parking',
+            description: 'Easy walk starts here - spectacular valley views',
+            elevation: '520m',
+            facilities: ['Parking', 'Viewing platform'],
+            photo: './images/grampians c.jpg'
+          },
+          { 
+            position: [-37.2140, 142.5030], 
+            name: 'Track Junction',
+            type: 'lookout',
+            description: 'Views improve as you walk',
+            elevation: '530m',
+            distance: '500m from carpark'
+          },
+          { 
+            position: [-37.2130, 142.5040], 
+            name: 'The Balconies',
+            type: 'summit',
+            description: 'Iconic rock formations jutting over Victoria Valley',
+            elevation: '540m',
+            distance: '1km from carpark',
+            highlights: ['Most photographed spot', 'Sunset location', 'Wedding photos'],
+            photo: './images/grampians d.jpg',
+            warning: 'No barriers - supervise children closely'
+          },
         ],
         color: '#95E77E'
       }
@@ -460,6 +669,47 @@ const Maps = () => {
                       </div>
                     </Card.Body>
                   </Card>
+                  
+                  {selectedTrail.elevationProfile && (
+                    <Card className="mt-3">
+                      <Card.Header>
+                        <i className="fas fa-chart-area me-2"></i>
+                        Elevation Profile
+                      </Card.Header>
+                      <Card.Body>
+                        <ResponsiveContainer width="100%" height={200}>
+                          <AreaChart data={selectedTrail.elevationProfile}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                              dataKey="km" 
+                              label={{ value: 'Distance (km)', position: 'insideBottom', offset: -5 }}
+                            />
+                            <YAxis 
+                              label={{ value: 'Elevation (m)', angle: -90, position: 'insideLeft' }}
+                              domain={['dataMin - 50', 'dataMax + 50']}
+                            />
+                            <ChartTooltip 
+                              formatter={(value) => [`${value}m`, 'Elevation']}
+                              labelFormatter={(label) => `${label} km`}
+                            />
+                            <Area 
+                              type="monotone" 
+                              dataKey="elevation" 
+                              stroke="#28a745" 
+                              fill="#28a74530"
+                              strokeWidth={2}
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                        <div className="mt-2 text-center">
+                          <small className="text-muted">
+                            Total Ascent: {selectedTrail.elevation} • 
+                            Highest Point: {Math.max(...selectedTrail.elevationProfile.map(p => p.elevation))}m
+                          </small>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  )}
                   
                   <Card className="mt-3">
                     <Card.Header>
@@ -726,6 +976,47 @@ const Maps = () => {
                     </Card.Body>
                   </Card>
                   
+                  {selectedTrail.elevationProfile && (
+                    <Card className="mt-3">
+                      <Card.Header>
+                        <i className="fas fa-chart-area me-2"></i>
+                        Elevation Profile
+                      </Card.Header>
+                      <Card.Body>
+                        <ResponsiveContainer width="100%" height={200}>
+                          <AreaChart data={selectedTrail.elevationProfile}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                              dataKey="km" 
+                              label={{ value: 'Distance (km)', position: 'insideBottom', offset: -5 }}
+                            />
+                            <YAxis 
+                              label={{ value: 'Elevation (m)', angle: -90, position: 'insideLeft' }}
+                              domain={['dataMin - 50', 'dataMax + 50']}
+                            />
+                            <ChartTooltip 
+                              formatter={(value) => [`${value}m`, 'Elevation']}
+                              labelFormatter={(label) => `${label} km`}
+                            />
+                            <Area 
+                              type="monotone" 
+                              dataKey="elevation" 
+                              stroke="#28a745" 
+                              fill="#28a74530"
+                              strokeWidth={2}
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                        <div className="mt-2 text-center">
+                          <small className="text-muted">
+                            Total Ascent: {selectedTrail.elevation} • 
+                            Highest Point: {Math.max(...selectedTrail.elevationProfile.map(p => p.elevation))}m
+                          </small>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  )}
+                  
                   <Card className="mt-3">
                     <Card.Header>
                       <i className="fas fa-map-pin me-2"></i>
@@ -781,8 +1072,8 @@ const Maps = () => {
             <Col lg={8}>
               <div style={{ height: '600px', position: 'relative' }}>
                 <MapContainer 
-                  center={trailsData.cathedral.center} 
-                  zoom={12} 
+                  center={location.center} 
+                  zoom={location.zoom || 13} 
                   style={{ height: '100%', width: '100%' }}
                 >
                   <TileLayer
@@ -790,7 +1081,9 @@ const Maps = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   />
                   
-                  {trailsData.cathedral.trails.map(trail => (
+                  {selectedTrail && <CenterMap center={location.center} zoom={location.zoom || 13} />}
+                  
+                  {location.trails.map(trail => (
                     <React.Fragment key={trail.id}>
                       <Polyline 
                         positions={trail.coordinates} 
@@ -803,12 +1096,97 @@ const Maps = () => {
                         </Tooltip>
                       </Polyline>
                       
+                      {selectedTrail?.id === trail.id && trail.coordinates.map((coord, idx) => {
+                        if (idx > 0 && idx < trail.coordinates.length - 1 && idx % 2 === 0) {
+                          return (
+                            <CircleMarker
+                              key={`km-${idx}`}
+                              center={coord}
+                              radius={4}
+                              fillColor="white"
+                              color={trail.color}
+                              weight={2}
+                              fillOpacity={1}
+                            >
+                              <Tooltip permanent direction="top">
+                                <small>{Math.round((idx / trail.coordinates.length) * parseFloat(trail.distance))}km</small>
+                              </Tooltip>
+                            </CircleMarker>
+                          );
+                        }
+                        return null;
+                      })}
+                      
                       {trail.waypoints.map((waypoint, idx) => (
-                        <Marker key={idx} position={waypoint.position}>
-                          <Popup>
-                            <strong>{waypoint.name}</strong>
-                            <br />
-                            {waypoint.description}
+                        <Marker 
+                          key={idx} 
+                          position={waypoint.position}
+                          icon={waypointIcons[waypoint.type] || waypointIcons.lookout}
+                        >
+                          <Popup maxWidth={300}>
+                            <div style={{ minWidth: '250px' }}>
+                              <h5 style={{ marginBottom: '10px', color: '#2e7d32' }}>
+                                {waypoint.name}
+                              </h5>
+                              
+                              {waypoint.photo && (
+                                <img 
+                                  src={waypoint.photo} 
+                                  alt={waypoint.name}
+                                  style={{ 
+                                    width: '100%', 
+                                    height: '150px', 
+                                    objectFit: 'cover',
+                                    borderRadius: '5px',
+                                    marginBottom: '10px'
+                                  }}
+                                />
+                              )}
+                              
+                              <p style={{ marginBottom: '8px' }}>
+                                {waypoint.description}
+                              </p>
+                              
+                              {waypoint.elevation && (
+                                <p style={{ marginBottom: '5px' }}>
+                                  <strong>Elevation:</strong> {waypoint.elevation}
+                                </p>
+                              )}
+                              
+                              {waypoint.distance && (
+                                <p style={{ marginBottom: '5px' }}>
+                                  <strong>Distance:</strong> {waypoint.distance}
+                                </p>
+                              )}
+                              
+                              {waypoint.facilities && (
+                                <div style={{ marginTop: '10px' }}>
+                                  <strong>Facilities:</strong>
+                                  <ul style={{ marginBottom: 0, paddingLeft: '20px' }}>
+                                    {waypoint.facilities.map((facility, i) => (
+                                      <li key={i}>{facility}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {waypoint.highlights && (
+                                <div style={{ marginTop: '10px' }}>
+                                  <strong>Highlights:</strong>
+                                  <ul style={{ marginBottom: 0, paddingLeft: '20px' }}>
+                                    {waypoint.highlights.map((highlight, i) => (
+                                      <li key={i}>{highlight}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {waypoint.warning && (
+                                <Alert variant="warning" className="mt-2 mb-0" style={{ padding: '8px' }}>
+                                  <small><strong>⚠️ Warning:</strong> {waypoint.warning}</small>
+                                </Alert>
+                              )}
+                            </div>
                           </Popup>
                         </Marker>
                       ))}
@@ -896,6 +1274,47 @@ const Maps = () => {
                     </Card.Body>
                   </Card>
                   
+                  {selectedTrail.elevationProfile && (
+                    <Card className="mt-3">
+                      <Card.Header>
+                        <i className="fas fa-chart-area me-2"></i>
+                        Elevation Profile
+                      </Card.Header>
+                      <Card.Body>
+                        <ResponsiveContainer width="100%" height={200}>
+                          <AreaChart data={selectedTrail.elevationProfile}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis 
+                              dataKey="km" 
+                              label={{ value: 'Distance (km)', position: 'insideBottom', offset: -5 }}
+                            />
+                            <YAxis 
+                              label={{ value: 'Elevation (m)', angle: -90, position: 'insideLeft' }}
+                              domain={['dataMin - 50', 'dataMax + 50']}
+                            />
+                            <ChartTooltip 
+                              formatter={(value) => [`${value}m`, 'Elevation']}
+                              labelFormatter={(label) => `${label} km`}
+                            />
+                            <Area 
+                              type="monotone" 
+                              dataKey="elevation" 
+                              stroke="#28a745" 
+                              fill="#28a74530"
+                              strokeWidth={2}
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                        <div className="mt-2 text-center">
+                          <small className="text-muted">
+                            Total Ascent: {selectedTrail.elevation} • 
+                            Highest Point: {Math.max(...selectedTrail.elevationProfile.map(p => p.elevation))}m
+                          </small>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  )}
+                  
                   <Card className="mt-3">
                     <Card.Header>
                       <i className="fas fa-map-pin me-2"></i>
@@ -951,8 +1370,8 @@ const Maps = () => {
             <Col lg={8}>
               <div style={{ height: '600px', position: 'relative' }}>
                 <MapContainer 
-                  center={trailsData.grampians.center} 
-                  zoom={11} 
+                  center={location.center} 
+                  zoom={location.zoom || 12} 
                   style={{ height: '100%', width: '100%' }}
                 >
                   <TileLayer
@@ -960,7 +1379,9 @@ const Maps = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   />
                   
-                  {trailsData.grampians.trails.map(trail => (
+                  {selectedTrail && <CenterMap center={location.center} zoom={location.zoom || 12} />}
+                  
+                  {location.trails.map(trail => (
                     <React.Fragment key={trail.id}>
                       <Polyline 
                         positions={trail.coordinates} 
@@ -973,12 +1394,97 @@ const Maps = () => {
                         </Tooltip>
                       </Polyline>
                       
+                      {selectedTrail?.id === trail.id && trail.coordinates.map((coord, idx) => {
+                        if (idx > 0 && idx < trail.coordinates.length - 1 && idx % 2 === 0) {
+                          return (
+                            <CircleMarker
+                              key={`km-${idx}`}
+                              center={coord}
+                              radius={4}
+                              fillColor="white"
+                              color={trail.color}
+                              weight={2}
+                              fillOpacity={1}
+                            >
+                              <Tooltip permanent direction="top">
+                                <small>{Math.round((idx / trail.coordinates.length) * parseFloat(trail.distance))}km</small>
+                              </Tooltip>
+                            </CircleMarker>
+                          );
+                        }
+                        return null;
+                      })}
+                      
                       {trail.waypoints.map((waypoint, idx) => (
-                        <Marker key={idx} position={waypoint.position}>
-                          <Popup>
-                            <strong>{waypoint.name}</strong>
-                            <br />
-                            {waypoint.description}
+                        <Marker 
+                          key={idx} 
+                          position={waypoint.position}
+                          icon={waypointIcons[waypoint.type] || waypointIcons.lookout}
+                        >
+                          <Popup maxWidth={300}>
+                            <div style={{ minWidth: '250px' }}>
+                              <h5 style={{ marginBottom: '10px', color: '#2e7d32' }}>
+                                {waypoint.name}
+                              </h5>
+                              
+                              {waypoint.photo && (
+                                <img 
+                                  src={waypoint.photo} 
+                                  alt={waypoint.name}
+                                  style={{ 
+                                    width: '100%', 
+                                    height: '150px', 
+                                    objectFit: 'cover',
+                                    borderRadius: '5px',
+                                    marginBottom: '10px'
+                                  }}
+                                />
+                              )}
+                              
+                              <p style={{ marginBottom: '8px' }}>
+                                {waypoint.description}
+                              </p>
+                              
+                              {waypoint.elevation && (
+                                <p style={{ marginBottom: '5px' }}>
+                                  <strong>Elevation:</strong> {waypoint.elevation}
+                                </p>
+                              )}
+                              
+                              {waypoint.distance && (
+                                <p style={{ marginBottom: '5px' }}>
+                                  <strong>Distance:</strong> {waypoint.distance}
+                                </p>
+                              )}
+                              
+                              {waypoint.facilities && (
+                                <div style={{ marginTop: '10px' }}>
+                                  <strong>Facilities:</strong>
+                                  <ul style={{ marginBottom: 0, paddingLeft: '20px' }}>
+                                    {waypoint.facilities.map((facility, i) => (
+                                      <li key={i}>{facility}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {waypoint.highlights && (
+                                <div style={{ marginTop: '10px' }}>
+                                  <strong>Highlights:</strong>
+                                  <ul style={{ marginBottom: 0, paddingLeft: '20px' }}>
+                                    {waypoint.highlights.map((highlight, i) => (
+                                      <li key={i}>{highlight}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {waypoint.warning && (
+                                <Alert variant="warning" className="mt-2 mb-0" style={{ padding: '8px' }}>
+                                  <small><strong>⚠️ Warning:</strong> {waypoint.warning}</small>
+                                </Alert>
+                              )}
+                            </div>
                           </Popup>
                         </Marker>
                       ))}
