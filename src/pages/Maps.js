@@ -88,7 +88,7 @@ const trailsData = {
   },
   cathedral: {
     name: 'Cathedral Ranges',
-    center: [-37.4167, 145.7000],
+    center: [-37.4090, 145.7120],
     trails: [
       {
         id: 'southern',
@@ -99,17 +99,17 @@ const trailsData = {
         elevation: '500m gain',
         description: 'Challenging circuit via Wells Cave and Sugarloaf Peak',
         coordinates: [
-          [-37.4300, 145.6900], // Cooks Mill
-          [-37.4250, 145.6950], // Wells Cave
-          [-37.4200, 145.7000], // Sugarloaf Peak
-          [-37.4150, 145.7050], // South Jawbone
-          [-37.4200, 145.6950], // The Farmyard
-          [-37.4300, 145.6900], // Return
+          [-37.4220, 145.7030], // Cooks Mill
+          [-37.4180, 145.7080], // Wells Cave
+          [-37.4140, 145.7120], // Sugarloaf Peak
+          [-37.4100, 145.7160], // South Jawbone
+          [-37.4120, 145.7100], // The Farmyard
+          [-37.4220, 145.7030], // Return
         ],
         waypoints: [
-          { position: [-37.4300, 145.6900], name: 'Cooks Mill', description: 'Historic sawmill site' },
-          { position: [-37.4250, 145.6950], name: 'Wells Cave', description: 'Rock scrambling required' },
-          { position: [-37.4200, 145.7000], name: 'Sugarloaf Peak', description: '740m - Spectacular views' },
+          { position: [-37.4220, 145.7030], name: 'Cooks Mill', description: 'Historic sawmill site' },
+          { position: [-37.4180, 145.7080], name: 'Wells Cave', description: 'Rock scrambling required' },
+          { position: [-37.4140, 145.7120], name: 'Sugarloaf Peak', description: '740m - Spectacular views' },
         ],
         color: '#FF6B6B'
       },
@@ -122,17 +122,17 @@ const trailsData = {
         elevation: '600m gain',
         description: 'Full northern loop including Cathedral Peak',
         coordinates: [
-          [-37.4100, 145.7100], // Neds Gully
-          [-37.4050, 145.7150], // Little Cathedral
-          [-37.4000, 145.7200], // Cathedral Peak
-          [-37.3950, 145.7150], // The Farmyard
-          [-37.4000, 145.7100], // Little River Track
-          [-37.4100, 145.7100], // Return
+          [-37.4050, 145.7150], // Neds Gully
+          [-37.3990, 145.7180], // Little Cathedral
+          [-37.3950, 145.7210], // Cathedral Peak
+          [-37.3980, 145.7170], // The Farmyard
+          [-37.4020, 145.7140], // Little River Track
+          [-37.4050, 145.7150], // Return
         ],
         waypoints: [
-          { position: [-37.4100, 145.7100], name: 'Neds Gully', description: 'Northern trailhead' },
-          { position: [-37.4000, 145.7200], name: 'Cathedral Peak', description: '840m - Highest point' },
-          { position: [-37.3950, 145.7150], name: 'The Farmyard', description: 'Rock formations' },
+          { position: [-37.4050, 145.7150], name: 'Neds Gully', description: 'Northern trailhead' },
+          { position: [-37.3950, 145.7210], name: 'Cathedral Peak', description: '840m - Highest point' },
+          { position: [-37.3980, 145.7170], name: 'The Farmyard', description: 'Rock formations' },
         ],
         color: '#4ECDC4'
       },
@@ -145,15 +145,15 @@ const trailsData = {
         elevation: '50m gain',
         description: 'Family-friendly loop through forest',
         coordinates: [
-          [-37.4300, 145.6900], // Cooks Mill
-          [-37.4280, 145.6920], // Creek crossing
-          [-37.4260, 145.6940], // Lookout
-          [-37.4280, 145.6920], // Return via creek
-          [-37.4300, 145.6900], // Cooks Mill
+          [-37.4220, 145.7030], // Cooks Mill
+          [-37.4200, 145.7050], // Creek crossing
+          [-37.4180, 145.7070], // Lookout
+          [-37.4200, 145.7050], // Return via creek
+          [-37.4220, 145.7030], // Cooks Mill
         ],
         waypoints: [
-          { position: [-37.4300, 145.6900], name: 'Cooks Mill', description: 'Easy walking track' },
-          { position: [-37.4260, 145.6940], name: 'Forest Lookout', description: 'Valley views' },
+          { position: [-37.4220, 145.7030], name: 'Cooks Mill', description: 'Easy walking track' },
+          { position: [-37.4180, 145.7070], name: 'Forest Lookout', description: 'Valley views' },
         ],
         color: '#95E77E'
       }
@@ -161,7 +161,7 @@ const trailsData = {
   },
   grampians: {
     name: 'The Grampians',
-    center: [-37.2333, 142.4167],
+    center: [-37.1760, 142.5200],
     trails: [
       {
         id: 'pinnacle',
@@ -172,16 +172,16 @@ const trailsData = {
         elevation: '260m gain',
         description: 'Iconic lookout with 360° views',
         coordinates: [
-          [-37.2450, 142.4100], // Wonderland Carpark
-          [-37.2420, 142.4120], // Silent Street
-          [-37.2400, 142.4140], // Cool Chamber
-          [-37.2380, 142.4160], // Bridal Veil Falls
-          [-37.2350, 142.4180], // The Pinnacle
+          [-37.1680, 142.5270], // Wonderland Carpark
+          [-37.1660, 142.5280], // Silent Street
+          [-37.1640, 142.5290], // Cool Chamber
+          [-37.1620, 142.5300], // Bridal Veil Falls
+          [-37.1600, 142.5310], // The Pinnacle
         ],
         waypoints: [
-          { position: [-37.2450, 142.4100], name: 'Wonderland Carpark', description: 'Start point' },
-          { position: [-37.2400, 142.4140], name: 'Cool Chamber', description: 'Rock formations' },
-          { position: [-37.2350, 142.4180], name: 'The Pinnacle', description: 'Best views in Grampians' },
+          { position: [-37.1680, 142.5270], name: 'Wonderland Carpark', description: 'Start point' },
+          { position: [-37.1640, 142.5290], name: 'Cool Chamber', description: 'Rock formations' },
+          { position: [-37.1600, 142.5310], name: 'The Pinnacle', description: 'Best views in Grampians' },
         ],
         color: '#FF6B6B'
       },
@@ -194,14 +194,14 @@ const trailsData = {
         elevation: '150m descent',
         description: 'Victoria\'s largest waterfall',
         coordinates: [
-          [-37.2100, 142.3800], // Carpark
-          [-37.2080, 142.3820], // Lookout
-          [-37.2060, 142.3840], // Base of falls
+          [-37.2280, 142.4460], // Carpark
+          [-37.2270, 142.4470], // Lookout
+          [-37.2260, 142.4480], // Base of falls
         ],
         waypoints: [
-          { position: [-37.2100, 142.3800], name: 'MacKenzie Falls Carpark', description: 'Two trail options' },
-          { position: [-37.2080, 142.3820], name: 'Falls Lookout', description: 'Wheelchair accessible' },
-          { position: [-37.2060, 142.3840], name: 'Falls Base', description: 'Steep stairs down' },
+          { position: [-37.2280, 142.4460], name: 'MacKenzie Falls Carpark', description: 'Two trail options' },
+          { position: [-37.2270, 142.4470], name: 'Falls Lookout', description: 'Wheelchair accessible' },
+          { position: [-37.2260, 142.4480], name: 'Falls Base', description: 'Steep stairs down' },
         ],
         color: '#4ECDC4'
       },
@@ -214,13 +214,13 @@ const trailsData = {
         elevation: '50m gain',
         description: 'Famous rock formations over Victoria Valley',
         coordinates: [
-          [-37.2200, 142.4000], // Reed Lookout Carpark
-          [-37.2180, 142.4020], // Track junction
-          [-37.2160, 142.4040], // The Balconies
+          [-37.2150, 142.5020], // Reed Lookout Carpark
+          [-37.2140, 142.5030], // Track junction
+          [-37.2130, 142.5040], // The Balconies
         ],
         waypoints: [
-          { position: [-37.2200, 142.4000], name: 'Reed Lookout', description: 'Easy walk starts here' },
-          { position: [-37.2160, 142.4040], name: 'The Balconies', description: 'Iconic rock formations' },
+          { position: [-37.2150, 142.5020], name: 'Reed Lookout', description: 'Easy walk starts here' },
+          { position: [-37.2130, 142.5040], name: 'The Balconies', description: 'Iconic rock formations' },
         ],
         color: '#95E77E'
       }
