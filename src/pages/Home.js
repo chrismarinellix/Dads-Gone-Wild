@@ -6,13 +6,13 @@ const Home = () => {
   // All images with their location info
   const allSlides = [
     {
-      image: './images/Feathertop A.jpg',
+      image: './images/feathertop b.jpg',
       name: 'Mount Feathertop',
       caption: "Victoria's Most Beautiful Peak",
       subtitle: '1,922m of Pure Adventure'
     },
     {
-      image: './images/feathertop b.jpg',
+      image: './images/Feathertop A.jpg',
       name: 'Mount Feathertop',
       caption: "Victoria's Most Beautiful Peak",
       subtitle: '1,922m of Pure Adventure'
