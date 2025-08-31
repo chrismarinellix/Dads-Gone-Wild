@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, Badge, Tabs, Tab, ListGroup } from 'react-bootstrap';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Tooltip } from 'react-leaflet';
+import { Container, Row, Col, Card, Badge, Tabs, Tab, ListGroup, ProgressBar, Alert } from 'react-bootstrap';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, Tooltip, CircleMarker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -11,6 +11,38 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
+
+// Custom icons for different waypoint types
+const createCustomIcon = (color, icon) => {
+  return L.divIcon({
+    html: `<div style="background-color: ${color}; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+             <i class="fas fa-${icon}" style="color: white; font-size: 14px;"></i>
+           </div>`,
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+    popupAnchor: [0, -15],
+    className: 'custom-div-icon'
+  });
+};
+
+// Icons for different waypoint types
+const waypointIcons = {
+  start: createCustomIcon('#28a745', 'play'),
+  summit: createCustomIcon('#dc3545', 'mountain'),
+  lookout: createCustomIcon('#17a2b8', 'eye'),
+  waterfall: createCustomIcon('#007bff', 'water'),
+  hut: createCustomIcon('#ffc107', 'home'),
+  cave: createCustomIcon('#6c757d', 'dungeon'),
+  camping: createCustomIcon('#28a745', 'campground'),
+  parking: createCustomIcon('#343a40', 'parking')
+};
+
+// Component to handle map centering when trail is selected
+const CenterMap = ({ center, zoom }) => {
+  const map = useMap();
+  map.setView(center, zoom);
+  return null;
+};
 
 // Trail data with coordinates
 const trailsData = {
@@ -35,9 +67,60 @@ const trailsData = {
           [-36.9083, 147.1375], // Mount Feathertop Summit
         ],
         waypoints: [
-          { position: [-36.8750, 147.2750], name: 'Diamantina Hut', description: 'Starting point near Mt Hotham' },
-          { position: [-36.9150, 147.1900], name: 'Federation Hut', description: 'Historic mountain hut with water' },
-          { position: [-36.9083, 147.1375], name: 'Summit', description: '1,922m - Victoria\'s second highest peak' },
+          { 
+            position: [-36.8750, 147.2750], 
+            name: 'Diamantina Hut', 
+            type: 'start',
+            description: 'Starting point near Mt Hotham',
+            elevation: '1,700m',
+            facilities: ['Parking', 'Toilets', 'Trail information'],
+            photo: './images/Feathertop A.jpg'
+          },
+          { 
+            position: [-36.8850, 147.2600], 
+            name: 'Bon Accord Junction', 
+            type: 'lookout',
+            description: 'Trail junction with panoramic views',
+            elevation: '1,750m',
+            distance: '2km from start'
+          },
+          { 
+            position: [-36.8950, 147.2400], 
+            name: 'Big Dipper', 
+            type: 'lookout',
+            description: 'Dramatic dip in the ridgeline',
+            elevation: '1,780m',
+            distance: '5km from start',
+            warning: 'Exposed section - dangerous in bad weather'
+          },
+          { 
+            position: [-36.9050, 147.2200], 
+            name: 'Twin Knobs', 
+            type: 'lookout',
+            description: 'Twin rocky outcrops along the ridge',
+            elevation: '1,850m',
+            distance: '8km from start'
+          },
+          { 
+            position: [-36.9150, 147.1900], 
+            name: 'Federation Hut', 
+            type: 'hut',
+            description: 'Historic mountain hut built in 1969',
+            elevation: '1,750m',
+            facilities: ['Emergency shelter', 'Water tank', 'Camping nearby'],
+            distance: '10km from start',
+            photo: './images/feathertop b.jpg'
+          },
+          { 
+            position: [-36.9083, 147.1375], 
+            name: 'Mount Feathertop Summit', 
+            type: 'summit',
+            description: 'Victoria\'s second highest peak',
+            elevation: '1,922m',
+            distance: '11km from start',
+            highlights: ['360° views', 'Alpine environment', 'Summit cairn'],
+            photo: './images/Feathertop A.jpg'
+          },
         ],
         color: '#FF6B6B'
       },
@@ -179,9 +262,51 @@ const trailsData = {
           [-37.1600, 142.5310], // The Pinnacle
         ],
         waypoints: [
-          { position: [-37.1680, 142.5270], name: 'Wonderland Carpark', description: 'Start point' },
-          { position: [-37.1640, 142.5290], name: 'Cool Chamber', description: 'Rock formations' },
-          { position: [-37.1600, 142.5310], name: 'The Pinnacle', description: 'Best views in Grampians' },
+          { 
+            position: [-37.1680, 142.5270], 
+            name: 'Wonderland Carpark', 
+            type: 'start',
+            description: 'Main trailhead for The Pinnacle',
+            elevation: '320m',
+            facilities: ['Parking', 'Toilets', 'Trail maps'],
+            photo: './images/grampians A.jpg'
+          },
+          { 
+            position: [-37.1660, 142.5280], 
+            name: 'Silent Street', 
+            type: 'lookout',
+            description: 'Narrow canyon between towering rock walls',
+            elevation: '380m',
+            distance: '0.8km from start'
+          },
+          { 
+            position: [-37.1640, 142.5290], 
+            name: 'Cool Chamber', 
+            type: 'cave',
+            description: 'Natural rock shelter with cool temperatures',
+            elevation: '420m',
+            distance: '1.5km from start',
+            highlights: ['Rock formations', 'Natural shelter', 'Photography spot']
+          },
+          { 
+            position: [-37.1620, 142.5300], 
+            name: 'Bridal Veil Falls', 
+            type: 'waterfall',
+            description: 'Seasonal waterfall (flows after rain)',
+            elevation: '480m',
+            distance: '1.8km from start'
+          },
+          { 
+            position: [-37.1600, 142.5310], 
+            name: 'The Pinnacle', 
+            type: 'summit',
+            description: 'Most photographed lookout in the Grampians',
+            elevation: '580m',
+            distance: '2.1km from start',
+            highlights: ['360° views', 'Halls Gap views', 'Sunrise/sunset spot'],
+            photo: './images/grampians c.jpg',
+            warning: 'Steep dropoffs - supervise children'
+          },
         ],
         color: '#FF6B6B'
       },
@@ -289,18 +414,102 @@ const Maps = () => {
               </ListGroup>
 
               {selectedTrail && (
-                <Card className="mt-3">
-                  <Card.Header>Trail Waypoints</Card.Header>
-                  <ListGroup variant="flush">
-                    {selectedTrail.waypoints.map((waypoint, idx) => (
-                      <ListGroup.Item key={idx}>
-                        <strong>{waypoint.name}</strong>
-                        <br />
-                        <small>{waypoint.description}</small>
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card>
+                <>
+                  <Card className="mt-3">
+                    <Card.Header>
+                      <i className="fas fa-route me-2"></i>
+                      Trail Details
+                    </Card.Header>
+                    <Card.Body>
+                      <Row className="mb-3">
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-hiking fa-2x text-primary mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.distance}</strong></p>
+                          <small className="text-muted">Distance</small>
+                        </Col>
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-clock fa-2x text-info mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.duration}</strong></p>
+                          <small className="text-muted">Duration</small>
+                        </Col>
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-chart-line fa-2x text-success mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.elevation}</strong></p>
+                          <small className="text-muted">Elevation</small>
+                        </Col>
+                      </Row>
+                      
+                      <div className="mb-3">
+                        <strong>Difficulty Level</strong>
+                        <ProgressBar 
+                          now={
+                            selectedTrail.difficulty === 'Easy' ? 25 :
+                            selectedTrail.difficulty === 'Easy-Moderate' ? 40 :
+                            selectedTrail.difficulty === 'Moderate' ? 50 :
+                            selectedTrail.difficulty === 'Moderate-Hard' ? 75 :
+                            100
+                          }
+                          variant={
+                            selectedTrail.difficulty === 'Easy' ? 'success' :
+                            selectedTrail.difficulty === 'Easy-Moderate' ? 'info' :
+                            selectedTrail.difficulty === 'Moderate' ? 'warning' :
+                            'danger'
+                          }
+                          label={selectedTrail.difficulty}
+                        />
+                      </div>
+                    </Card.Body>
+                  </Card>
+                  
+                  <Card className="mt-3">
+                    <Card.Header>
+                      <i className="fas fa-map-pin me-2"></i>
+                      Waypoints ({selectedTrail.waypoints.length})
+                    </Card.Header>
+                    <ListGroup variant="flush">
+                      {selectedTrail.waypoints.map((waypoint, idx) => (
+                        <ListGroup.Item key={idx} className="d-flex align-items-start">
+                          <div className="me-3">
+                            <Badge 
+                              bg={
+                                waypoint.type === 'start' ? 'success' :
+                                waypoint.type === 'summit' ? 'danger' :
+                                waypoint.type === 'hut' ? 'warning' :
+                                waypoint.type === 'lookout' ? 'info' :
+                                'secondary'
+                              }
+                              style={{ width: '30px', height: '30px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              {idx + 1}
+                            </Badge>
+                          </div>
+                          <div className="flex-grow-1">
+                            <strong>{waypoint.name}</strong>
+                            {waypoint.elevation && <Badge bg="light" text="dark" className="ms-2">{waypoint.elevation}</Badge>}
+                            <br />
+                            <small className="text-muted">{waypoint.description}</small>
+                            {waypoint.distance && (
+                              <div className="mt-1">
+                                <small className="text-primary">
+                                  <i className="fas fa-route me-1"></i>
+                                  {waypoint.distance}
+                                </small>
+                              </div>
+                            )}
+                            {waypoint.warning && (
+                              <div className="mt-1">
+                                <small className="text-danger">
+                                  <i className="fas fa-exclamation-triangle me-1"></i>
+                                  {waypoint.warning}
+                                </small>
+                              </div>
+                            )}
+                          </div>
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </Card>
+                </>
               )}
             </Col>
             
@@ -316,25 +525,120 @@ const Maps = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   />
                   
+                  {selectedTrail && (
+                    <CenterMap center={selectedTrail.coordinates[0]} zoom={13} />
+                  )}
+                  
                   {location.trails.map(trail => (
                     <React.Fragment key={trail.id}>
                       <Polyline 
                         positions={trail.coordinates} 
                         color={trail.color}
-                        weight={selectedTrail?.id === trail.id ? 5 : 3}
-                        opacity={selectedTrail?.id === trail.id ? 1 : 0.6}
+                        weight={selectedTrail?.id === trail.id ? 6 : 3}
+                        opacity={selectedTrail?.id === trail.id ? 1 : 0.5}
+                        dashArray={selectedTrail?.id === trail.id ? null : "5, 10"}
                       >
-                        <Tooltip permanent={selectedTrail?.id === trail.id}>
-                          {trail.name}
+                        <Tooltip permanent={selectedTrail?.id === trail.id} direction="center">
+                          <div style={{ fontWeight: 'bold', fontSize: '12px' }}>
+                            {trail.name}
+                            <br />
+                            <small>{trail.distance} • {trail.duration}</small>
+                          </div>
                         </Tooltip>
                       </Polyline>
                       
+                      {/* Add distance markers along the trail */}
+                      {selectedTrail?.id === trail.id && trail.coordinates.map((coord, idx) => {
+                        if (idx % 2 === 0 && idx > 0 && idx < trail.coordinates.length - 1) {
+                          return (
+                            <CircleMarker
+                              key={`km-${idx}`}
+                              center={coord}
+                              radius={4}
+                              fillColor="white"
+                              color={trail.color}
+                              weight={2}
+                              fillOpacity={1}
+                            >
+                              <Tooltip permanent direction="top">
+                                <small>{Math.round((idx / trail.coordinates.length) * 22)}km</small>
+                              </Tooltip>
+                            </CircleMarker>
+                          );
+                        }
+                        return null;
+                      })}
+                      
                       {trail.waypoints.map((waypoint, idx) => (
-                        <Marker key={idx} position={waypoint.position}>
-                          <Popup>
-                            <strong>{waypoint.name}</strong>
-                            <br />
-                            {waypoint.description}
+                        <Marker 
+                          key={idx} 
+                          position={waypoint.position}
+                          icon={waypointIcons[waypoint.type] || waypointIcons.lookout}
+                        >
+                          <Popup maxWidth={300}>
+                            <div style={{ minWidth: '250px' }}>
+                              <h5 style={{ marginBottom: '10px', color: '#2e7d32' }}>
+                                {waypoint.name}
+                              </h5>
+                              
+                              {waypoint.photo && (
+                                <img 
+                                  src={waypoint.photo} 
+                                  alt={waypoint.name}
+                                  style={{ 
+                                    width: '100%', 
+                                    height: '150px', 
+                                    objectFit: 'cover',
+                                    borderRadius: '5px',
+                                    marginBottom: '10px'
+                                  }}
+                                />
+                              )}
+                              
+                              <p style={{ marginBottom: '8px' }}>
+                                {waypoint.description}
+                              </p>
+                              
+                              {waypoint.elevation && (
+                                <p style={{ marginBottom: '5px' }}>
+                                  <strong>Elevation:</strong> {waypoint.elevation}
+                                </p>
+                              )}
+                              
+                              {waypoint.distance && (
+                                <p style={{ marginBottom: '5px' }}>
+                                  <strong>Distance:</strong> {waypoint.distance}
+                                </p>
+                              )}
+                              
+                              {waypoint.facilities && (
+                                <div style={{ marginTop: '10px' }}>
+                                  <strong>Facilities:</strong>
+                                  <ul style={{ marginBottom: 0, paddingLeft: '20px' }}>
+                                    {waypoint.facilities.map((facility, i) => (
+                                      <li key={i}>{facility}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {waypoint.highlights && (
+                                <div style={{ marginTop: '10px' }}>
+                                  <strong>Highlights:</strong>
+                                  <ul style={{ marginBottom: 0, paddingLeft: '20px' }}>
+                                    {waypoint.highlights.map((highlight, i) => (
+                                      <li key={i}>{highlight}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {waypoint.warning && (
+                                <Alert variant="warning" className="mt-2 mb-0" style={{ padding: '8px' }}>
+                                  <small><strong>⚠️ Warning:</strong> {waypoint.warning}</small>
+                                </Alert>
+                              )}
+                            </div>
                           </Popup>
                         </Marker>
                       ))}
@@ -375,18 +679,102 @@ const Maps = () => {
               </ListGroup>
 
               {selectedTrail && (
-                <Card className="mt-3">
-                  <Card.Header>Trail Waypoints</Card.Header>
-                  <ListGroup variant="flush">
-                    {selectedTrail.waypoints.map((waypoint, idx) => (
-                      <ListGroup.Item key={idx}>
-                        <strong>{waypoint.name}</strong>
-                        <br />
-                        <small>{waypoint.description}</small>
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card>
+                <>
+                  <Card className="mt-3">
+                    <Card.Header>
+                      <i className="fas fa-route me-2"></i>
+                      Trail Details
+                    </Card.Header>
+                    <Card.Body>
+                      <Row className="mb-3">
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-hiking fa-2x text-primary mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.distance}</strong></p>
+                          <small className="text-muted">Distance</small>
+                        </Col>
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-clock fa-2x text-info mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.duration}</strong></p>
+                          <small className="text-muted">Duration</small>
+                        </Col>
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-chart-line fa-2x text-success mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.elevation}</strong></p>
+                          <small className="text-muted">Elevation</small>
+                        </Col>
+                      </Row>
+                      
+                      <div className="mb-3">
+                        <strong>Difficulty Level</strong>
+                        <ProgressBar 
+                          now={
+                            selectedTrail.difficulty === 'Easy' ? 25 :
+                            selectedTrail.difficulty === 'Easy-Moderate' ? 40 :
+                            selectedTrail.difficulty === 'Moderate' ? 50 :
+                            selectedTrail.difficulty === 'Moderate-Hard' ? 75 :
+                            100
+                          }
+                          variant={
+                            selectedTrail.difficulty === 'Easy' ? 'success' :
+                            selectedTrail.difficulty === 'Easy-Moderate' ? 'info' :
+                            selectedTrail.difficulty === 'Moderate' ? 'warning' :
+                            'danger'
+                          }
+                          label={selectedTrail.difficulty}
+                        />
+                      </div>
+                    </Card.Body>
+                  </Card>
+                  
+                  <Card className="mt-3">
+                    <Card.Header>
+                      <i className="fas fa-map-pin me-2"></i>
+                      Waypoints ({selectedTrail.waypoints.length})
+                    </Card.Header>
+                    <ListGroup variant="flush">
+                      {selectedTrail.waypoints.map((waypoint, idx) => (
+                        <ListGroup.Item key={idx} className="d-flex align-items-start">
+                          <div className="me-3">
+                            <Badge 
+                              bg={
+                                waypoint.type === 'start' ? 'success' :
+                                waypoint.type === 'summit' ? 'danger' :
+                                waypoint.type === 'hut' ? 'warning' :
+                                waypoint.type === 'lookout' ? 'info' :
+                                'secondary'
+                              }
+                              style={{ width: '30px', height: '30px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              {idx + 1}
+                            </Badge>
+                          </div>
+                          <div className="flex-grow-1">
+                            <strong>{waypoint.name}</strong>
+                            {waypoint.elevation && <Badge bg="light" text="dark" className="ms-2">{waypoint.elevation}</Badge>}
+                            <br />
+                            <small className="text-muted">{waypoint.description}</small>
+                            {waypoint.distance && (
+                              <div className="mt-1">
+                                <small className="text-primary">
+                                  <i className="fas fa-route me-1"></i>
+                                  {waypoint.distance}
+                                </small>
+                              </div>
+                            )}
+                            {waypoint.warning && (
+                              <div className="mt-1">
+                                <small className="text-danger">
+                                  <i className="fas fa-exclamation-triangle me-1"></i>
+                                  {waypoint.warning}
+                                </small>
+                              </div>
+                            )}
+                          </div>
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </Card>
+                </>
               )}
             </Col>
             
@@ -461,18 +849,102 @@ const Maps = () => {
               </ListGroup>
 
               {selectedTrail && (
-                <Card className="mt-3">
-                  <Card.Header>Trail Waypoints</Card.Header>
-                  <ListGroup variant="flush">
-                    {selectedTrail.waypoints.map((waypoint, idx) => (
-                      <ListGroup.Item key={idx}>
-                        <strong>{waypoint.name}</strong>
-                        <br />
-                        <small>{waypoint.description}</small>
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card>
+                <>
+                  <Card className="mt-3">
+                    <Card.Header>
+                      <i className="fas fa-route me-2"></i>
+                      Trail Details
+                    </Card.Header>
+                    <Card.Body>
+                      <Row className="mb-3">
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-hiking fa-2x text-primary mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.distance}</strong></p>
+                          <small className="text-muted">Distance</small>
+                        </Col>
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-clock fa-2x text-info mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.duration}</strong></p>
+                          <small className="text-muted">Duration</small>
+                        </Col>
+                        <Col xs={4} className="text-center">
+                          <i className="fas fa-chart-line fa-2x text-success mb-2"></i>
+                          <p className="mb-0"><strong>{selectedTrail.elevation}</strong></p>
+                          <small className="text-muted">Elevation</small>
+                        </Col>
+                      </Row>
+                      
+                      <div className="mb-3">
+                        <strong>Difficulty Level</strong>
+                        <ProgressBar 
+                          now={
+                            selectedTrail.difficulty === 'Easy' ? 25 :
+                            selectedTrail.difficulty === 'Easy-Moderate' ? 40 :
+                            selectedTrail.difficulty === 'Moderate' ? 50 :
+                            selectedTrail.difficulty === 'Moderate-Hard' ? 75 :
+                            100
+                          }
+                          variant={
+                            selectedTrail.difficulty === 'Easy' ? 'success' :
+                            selectedTrail.difficulty === 'Easy-Moderate' ? 'info' :
+                            selectedTrail.difficulty === 'Moderate' ? 'warning' :
+                            'danger'
+                          }
+                          label={selectedTrail.difficulty}
+                        />
+                      </div>
+                    </Card.Body>
+                  </Card>
+                  
+                  <Card className="mt-3">
+                    <Card.Header>
+                      <i className="fas fa-map-pin me-2"></i>
+                      Waypoints ({selectedTrail.waypoints.length})
+                    </Card.Header>
+                    <ListGroup variant="flush">
+                      {selectedTrail.waypoints.map((waypoint, idx) => (
+                        <ListGroup.Item key={idx} className="d-flex align-items-start">
+                          <div className="me-3">
+                            <Badge 
+                              bg={
+                                waypoint.type === 'start' ? 'success' :
+                                waypoint.type === 'summit' ? 'danger' :
+                                waypoint.type === 'hut' ? 'warning' :
+                                waypoint.type === 'lookout' ? 'info' :
+                                'secondary'
+                              }
+                              style={{ width: '30px', height: '30px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                              {idx + 1}
+                            </Badge>
+                          </div>
+                          <div className="flex-grow-1">
+                            <strong>{waypoint.name}</strong>
+                            {waypoint.elevation && <Badge bg="light" text="dark" className="ms-2">{waypoint.elevation}</Badge>}
+                            <br />
+                            <small className="text-muted">{waypoint.description}</small>
+                            {waypoint.distance && (
+                              <div className="mt-1">
+                                <small className="text-primary">
+                                  <i className="fas fa-route me-1"></i>
+                                  {waypoint.distance}
+                                </small>
+                              </div>
+                            )}
+                            {waypoint.warning && (
+                              <div className="mt-1">
+                                <small className="text-danger">
+                                  <i className="fas fa-exclamation-triangle me-1"></i>
+                                  {waypoint.warning}
+                                </small>
+                              </div>
+                            )}
+                          </div>
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </Card>
+                </>
               )}
             </Col>
             
@@ -520,18 +992,131 @@ const Maps = () => {
       </Tabs>
 
       <Row className="mt-4">
-        <Col>
+        <Col lg={8}>
           <Card>
             <Card.Body>
-              <h5>How to use the interactive maps:</h5>
-              <ul>
-                <li>Click on any trail in the list to highlight it on the map</li>
-                <li>Click on markers to see waypoint information</li>
-                <li>Zoom in/out using mouse wheel or +/- buttons</li>
-                <li>Drag to move around the map</li>
-                <li>Trail colors indicate different routes</li>
-                <li>Difficulty badges show trail challenge level</li>
-              </ul>
+              <h5><i className="fas fa-info-circle me-2"></i>How to use the interactive maps:</h5>
+              <Row>
+                <Col md={6}>
+                  <ul>
+                    <li>Click on any trail in the list to highlight it on the map</li>
+                    <li>Click on waypoint markers to see detailed information and photos</li>
+                    <li>Selected trails show distance markers along the route</li>
+                    <li>Zoom in/out using mouse wheel or +/- buttons</li>
+                    <li>Drag to move around the map</li>
+                    <li>Dashed lines indicate unselected trails</li>
+                  </ul>
+                </Col>
+                <Col md={6}>
+                  <strong>Trail Difficulty:</strong>
+                  <div className="mt-2">
+                    <Badge bg="success" className="me-2">Easy</Badge> Suitable for beginners<br/>
+                    <Badge bg="info" className="me-2">Easy-Moderate</Badge> Some fitness required<br/>
+                    <Badge bg="warning" className="me-2">Moderate</Badge> Good fitness needed<br/>
+                    <Badge bg="danger" className="me-2">Hard</Badge> Experienced hikers only
+                  </div>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col lg={4}>
+          <Card>
+            <Card.Header>
+              <i className="fas fa-map-signs me-2"></i>
+              Map Legend
+            </Card.Header>
+            <Card.Body>
+              <div className="d-flex align-items-center mb-2">
+                <div style={{ 
+                  backgroundColor: '#28a745', 
+                  width: '25px', 
+                  height: '25px', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginRight: '10px'
+                }}>
+                  <i className="fas fa-play" style={{ color: 'white', fontSize: '10px' }}></i>
+                </div>
+                <span>Trail Start/Parking</span>
+              </div>
+              <div className="d-flex align-items-center mb-2">
+                <div style={{ 
+                  backgroundColor: '#dc3545', 
+                  width: '25px', 
+                  height: '25px', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginRight: '10px'
+                }}>
+                  <i className="fas fa-mountain" style={{ color: 'white', fontSize: '10px' }}></i>
+                </div>
+                <span>Summit/Peak</span>
+              </div>
+              <div className="d-flex align-items-center mb-2">
+                <div style={{ 
+                  backgroundColor: '#17a2b8', 
+                  width: '25px', 
+                  height: '25px', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginRight: '10px'
+                }}>
+                  <i className="fas fa-eye" style={{ color: 'white', fontSize: '10px' }}></i>
+                </div>
+                <span>Lookout/Viewpoint</span>
+              </div>
+              <div className="d-flex align-items-center mb-2">
+                <div style={{ 
+                  backgroundColor: '#ffc107', 
+                  width: '25px', 
+                  height: '25px', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginRight: '10px'
+                }}>
+                  <i className="fas fa-home" style={{ color: 'white', fontSize: '10px' }}></i>
+                </div>
+                <span>Hut/Shelter</span>
+              </div>
+              <div className="d-flex align-items-center mb-2">
+                <div style={{ 
+                  backgroundColor: '#007bff', 
+                  width: '25px', 
+                  height: '25px', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginRight: '10px'
+                }}>
+                  <i className="fas fa-water" style={{ color: 'white', fontSize: '10px' }}></i>
+                </div>
+                <span>Waterfall/Water Source</span>
+              </div>
+              <div className="d-flex align-items-center">
+                <div style={{ 
+                  backgroundColor: '#6c757d', 
+                  width: '25px', 
+                  height: '25px', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginRight: '10px'
+                }}>
+                  <i className="fas fa-dungeon" style={{ color: 'white', fontSize: '10px' }}></i>
+                </div>
+                <span>Cave/Rock Formation</span>
+              </div>
             </Card.Body>
           </Card>
         </Col>
